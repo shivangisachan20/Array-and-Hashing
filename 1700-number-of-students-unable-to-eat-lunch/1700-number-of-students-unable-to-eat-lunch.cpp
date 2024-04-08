@@ -1,11 +1,16 @@
 class Solution {
 public:
-    int countStudents(vector<int>& A, vector<int>& B) {
-        int count[] = {0, 0}, n = A.size(), k;
-        for (int a : A)
-            count[a]++;
-        for (k = 0; k < n && count[B[k]] > 0; ++k)
-            count[B[k]]--;
-        return n - k;
+    int countStudents(vector<int>& students, vector<int>& sandwiches) {
+        while (!students.empty() && std::count(students.begin(), students.end(), sandwiches[0]) > 0) {
+            if (students[0] == sandwiches[0]) {
+                students.erase(students.begin());
+                sandwiches.erase(sandwiches.begin());
+            } else {
+                students.push_back(students[0]);
+                students.erase(students.begin());
+            }
+        }
+        return students.size();
+        
     }
 };
