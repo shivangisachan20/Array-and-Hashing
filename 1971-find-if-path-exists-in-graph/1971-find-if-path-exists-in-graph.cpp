@@ -14,8 +14,10 @@ public:
             int curr = q.front();
             q.pop();
             
-            for(auto &node : graph[curr]){
-                if(!visited[node]){
+            for(auto node : graph[curr])
+            {
+                if(!visited[node])
+                {
                     visited[node] = 1; 
                     q.push(node);
                 }
