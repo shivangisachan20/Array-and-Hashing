@@ -10,7 +10,8 @@ public:
                dp[i] = max(dp[i], dp[j]);
             
             }
-             res = max(res, ++dp[i]);    
+            dp[i]=dp[i]+1;
+             res = max(res, dp[i]);    
         }
         return res;
     }
