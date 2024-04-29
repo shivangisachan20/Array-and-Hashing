@@ -10,7 +10,7 @@ public:
         int answer = 0;
         while (value > 0)
         {
-            value&=(value-1);
+            value&=(value-1);  // used for counting set bit in value
             answer++;
         }
             
