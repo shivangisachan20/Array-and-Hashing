@@ -1,35 +1,41 @@
 class Solution {
-    // Memoization
 public:
-    int t[101][101];
     int countsteps(int ringIndex,int i, int n)
     {
         int dist=abs(i-ringIndex);
         int wraparound=(n-dist);
         return min(dist,wraparound);
     }
-    int solve(int ringIndex,int keyIndex,string& ring, string& key)
+    int findRotateSteps(string ring, string key) 
     {
-        if(keyIndex==key.length()) return 0;
+        int n=ring.length();
+        int m=key.length();
         
-        if(t[ringIndex][keyIndex]!=-1)
-            return t[ringIndex][keyIndex];
+        vector<vector<int>>t(n+1,vector<int>(m+1,INT_MAX));
         
-        int result=INT_MAX;
-        for(int i=0;i<ring.length();i++)
+        for(int ringIndex=0;ringIndex<n;ringIndex++)
         {
-            if(ring[i]==key[keyIndex])
-            {
-                int totalsteps=countsteps(ringIndex,i,ring.length())+1+
-                    solve(i,keyIndex+1,ring,key);
-                result=min(result,totalsteps);
-            }
+            t[ringIndex][m]=0;
             
         }
-        return t[ringIndex][keyIndex]=result;
-    }
-    int findRotateSteps(string ring, string key) {
-        memset(t,-1,sizeof(t));
-        return solve(0,0,ring,key);
+        for(int keyIndex=m-1;keyIndex>=0;keyIndex--)
+        {
+            for(int ringIndex=0;ringIndex<n;ringIndex++)
+            {
+                int result=INT_MAX;
+                
+                for(int i=0;i<n;i++ )
+                {
+                    if(ring[i]==key[keyIndex])
+                    {
+                        int total=countsteps(ringIndex,i,n)+1+t[i][keyIndex+1];
+                        result=min(result,total);
+                    }
+                }
+                t[ringIndex][keyIndex]=result;
+            }
+        }
+return t[0][0];
+        
     }
 };
