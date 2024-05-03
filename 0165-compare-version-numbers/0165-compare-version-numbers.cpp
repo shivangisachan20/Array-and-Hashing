@@ -10,7 +10,8 @@ public:
     int num2 = 0;
     while(i<n1 || j<n2)
     {
-        while(i<n1 && version1[i]!='.'){
+        while(i<n1 && version1[i]!='.') // converting individual character into number
+        {
             num1 = num1*10+(version1[i]-'0');
             i++;
         }
