@@ -10,24 +10,13 @@
  */
 class Solution {
 public:
-    int carry;
-
-  int multiply(ListNode* head) {
-    if (head == nullptr) {
-      return 0; // Base case: If list is empty, return 0 (no carry)
+    int multiply(ListNode* head){
+        if(!head) return 0;
+        int t = head->val*2 + multiply(head->next);
+        head->val = t%10;
+        return t/10;
     }
-
-    multiply(head->next);
-
-    int current = head->val * 2 + carry;
-    carry = current / 10;
-
-    head->val = current % 10;
-
-    return carry; // Return the final carry after processing the entire list
-  }
-    ListNode* doubleIt(ListNode* head) 
-    {
+    ListNode* doubleIt(ListNode* head) {
         int t = multiply(head);
         if(t) head = new ListNode(t, head);
         return head;
