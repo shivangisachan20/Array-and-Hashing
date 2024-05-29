@@ -1,38 +1,17 @@
 class Solution {
 public:
-    void addOne(string &s) {
-        int i = s.length()-1;
-
-        while(i >= 0 && s[i] != '0') {
-            s[i] = '0';
-            i--;
-        }
-
-        if(i < 0) 
-        {
-            s = '1' + s;
-        } 
-        else 
-        {
-            s[i] ='1';
-        }
-    }
-
     int numSteps(string s) {
+        int carry = 0;
         int op = 0;
-
-        while(s.length() > 1) {
-            int n = s.length();
-
-            if(s[n-1] == '0') {
-                s.pop_back();
+        int n = s.length();
+        for (int i = n - 1; i >= 1; i--) {
+            if (((s[i] - '0') + carry) % 2 == 1) {  // for odd 2 operation, first for converting all 1's to 0 till we get the first 0
+                op += 2;
+                carry = 1; // and make it 1
             } else {
-                addOne(s);
+                op++;
             }
-
-            op++;
         }
-
-        return op;
+        return op + carry;
     }
 };
