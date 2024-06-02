@@ -1,26 +1,30 @@
-class Solution {
+public class Solution {
     public int[] singleNumber(int[] nums) {
-    int xor = 0;
-    for (int num : nums) {
-        xor ^= num;
-    }
-    
-    int mask = 1;
-    while ((xor & mask) == 0) {
-        mask <<= 1;
-    }
-    
-    int num1 = 0;
-    int num2 = 0;
-    
-    for (int num : nums) {
-        if ((num & mask) == 0) {
-            num1 ^= num;
-        } else {
-            num2 ^= num;
+        // Create a hashmap to store the frequency of each number
+        Map<Integer, Integer> frequencyMap = new HashMap<>();
+        
+        // Populate the hashmap with frequencies
+        for (int num : nums) 
+        {
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
         }
+        
+        // Find the two numbers that appear exactly once
+        int[] result = new int[2];
+        int index = 0;
+        for (var entry : frequencyMap.entrySet()) 
+        {
+            if (entry.getValue() == 1) 
+            {
+                result[index++] = entry.getKey();
+                // If we found both numbers, break out of the loop
+                if (index == 2)
+                {
+                    break;
+                }
+            }
+        }
+        
+        return result;
     }
-    
-    return new int[]{num1, num2};
-}
-}
+};
