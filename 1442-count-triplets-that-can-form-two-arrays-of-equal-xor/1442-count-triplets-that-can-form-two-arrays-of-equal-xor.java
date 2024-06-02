@@ -15,9 +15,12 @@ class Solution
         int triplets = 0;
 
         // Count the triplets
-        for (int i = 0; i < prefixXor.length; i++) {
-            for (int k = i + 1; k < prefixXor.length; k++) {
-                if (prefixXor[k] == prefixXor[i]) {
+        for (int i = 0; i < prefixXor.length; i++) 
+        {
+            for (int k = i + 1; k < prefixXor.length; k++) 
+            {
+                if (prefixXor[k] == prefixXor[i])
+                {
                     triplets += k - i - 1;
                 }
             }
