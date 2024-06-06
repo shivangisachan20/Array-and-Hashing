@@ -21,7 +21,8 @@ public:
 						return false;
 				}
 			}
-			else
+            else
+
 				it++;
 		}
 		return true;
