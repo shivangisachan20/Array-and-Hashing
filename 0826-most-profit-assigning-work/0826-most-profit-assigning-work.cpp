@@ -1,6 +1,8 @@
-class Solution {
+class Solution
+{
 public:
-    int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) {
+    int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) 
+    {
         int n = worker.size();
         sort(worker.begin(),worker.end());
         vector<pair<int,int>> nums(n);
