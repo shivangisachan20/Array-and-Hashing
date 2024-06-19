@@ -1,21 +1,51 @@
-class Solution {
+class Solution 
+{
 public:
-    int minDays(vector<int>& v, int m, int k) {
-        if(m>v.size()/k) return -1;
-        int l=1,h=1e9;
-        while(l<h)
+    int getNumOfBouquets(vector<int>& bloomDay, int mid, int k)
+    {
+        int numOfBouquets = 0;
+        int consecutive_count = 0;
+        
+        //Find count of consecutive flowers you can pick at mid day.
+        for (int i = 0; i < bloomDay.size(); i++) 
         {
-            int mid=(l+h)/2;
-            int n=0,c=0;
-            for(auto &i:v)
+            if (bloomDay[i] <= mid) 
             {
-                if(i<=mid) c++;
-                else c=0;
-                if(c==k) n++,c=0;
+                consecutive_count++;
+            } 
+            else 
+            {
+                consecutive_count = 0;
             }
-            if(n>=m) h=mid;
-            else l=mid+1;
+            if (consecutive_count == k) {
+                numOfBouquets++;
+                consecutive_count = 0;
+            }
         }
-        return l;
+        return numOfBouquets;
+    }
+int minDays(vector<int>& bloomDay, int m, int k)
+{
+        int start_day = 0;
+        int end_day   = *max_element(begin(bloomDay), end(bloomDay));
+
+        int minDays = -1;
+
+        while (start_day <= end_day) 
+        {
+            int mid = start_day + (end_day - start_day)/2;
+
+            if (getNumOfBouquets(bloomDay, mid, k) >= m)
+            {
+                minDays = mid;
+                end_day = mid - 1;
+            } 
+            else 
+            {
+                start_day = mid + 1;
+            }
+        }
+
+        return minDays;
     }
 };
