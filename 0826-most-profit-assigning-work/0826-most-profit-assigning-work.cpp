@@ -1,32 +1,39 @@
-class Solution
-{
+//Approach-1 (Using max-heap)
+//T.C : O(nlogn + mlogn)
+//S.C : O(n)
+class Solution {
 public:
-    int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) 
-    {
-        int n = worker.size();
-        sort(worker.begin(),worker.end());
-        vector<pair<int,int>> nums(n);
+    int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) {
+        int n = difficulty.size();
+        int m = worker.size();
 
-        for(int i=0;i<n;i++)
-        {
-            nums[i] = {difficulty[i],profit[i]};
-        }
-        sort(nums.begin(),nums.end());
+        priority_queue<pair<int, int>> pq; //max heap of pairs
 
-        int maxProfit = 0;
-        int tempProfit = 0;
-        for(int i=0,j=0;i<n;i++)
+        for(int i = 0; i < n; i++) 
         {
-            while(j<n && nums[j].first <= worker[i])
+            int diff = difficulty[i];
+            int prof = profit[i];
+
+            pq.push({prof, diff});
+        }
+
+        sort(begin(worker), end(worker), greater<int>()); //descending order
+
+        int i = 0;
+        int totalProfit = 0;
+        while(i < m && !pq.empty())
+        {
+            if(pq.top().second > worker[i])
             {
-                tempProfit = max(nums[j].second,tempProfit);
-                j++;
-            }
-            if(j>0 && nums[j-1].first <= worker[i])
+                pq.pop();
+            } 
+            else 
             {
-                maxProfit = maxProfit + tempProfit;
+                totalProfit += pq.top().first;
+                i++;
             }
         }
-        return maxProfit;
-    }
-};
+
+        return totalProfit;
+        
+    }};
