@@ -23,11 +23,16 @@ public:
         return curMax;
     }
     
-    int isValid(int mid, vector<int> position) {
-            int total = 1;
-            int curDist = position[0];
-            for (int i = 1; i < position.size(); i++) {
-                if (position[i] - curDist >= mid) {
+    int isValid(int mid, vector<int> position) 
+    {
+         int curDist = position[0];
+        
+         int total = 1; // one ball is place at position[0]
+        
+        for (int i = 1; i < position.size(); i++) 
+            {
+                if (position[i] - curDist >= mid) 
+                {
                     total++;
                     curDist = position[i];
                 }
