@@ -8,7 +8,7 @@ public:
             degree[edge[1]]++;
         }
 
-        for (pair<int, int> nodes : degree) {
+        for (auto nodes : degree) {
             int node = nodes.first;
             int nodeDegree = nodes.second;
 
