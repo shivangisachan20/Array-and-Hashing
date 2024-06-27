@@ -3,7 +3,7 @@ public:
     int findCenter(vector<vector<int>>& edges) {
         unordered_map<int, int> degree;
 
-        for (vector<int> edge : edges) {
+        for (auto edge : edges) {
             degree[edge[0]]++;
             degree[edge[1]]++;
         }
