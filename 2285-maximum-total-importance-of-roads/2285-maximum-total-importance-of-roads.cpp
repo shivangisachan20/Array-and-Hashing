@@ -1,14 +1,22 @@
 class Solution {
 public:
     long long maximumImportance(int n, vector<vector<int>>& roads) {
-        long res = 0, cost = 1;
-        vector<int> conn(n, 0);
-        for (auto road : roads) {
-            conn[road[0]]++;
-            conn[road[1]]++;
+        vector<long long> degree(n, 0);
+
+        for (vector<int>& edge : roads) {
+            degree[edge[0]]++;
+            degree[edge[1]]++;
         }
-        sort(conn.begin(), conn.end());
-        for (auto con : conn) res += con * (cost++);
-        return res;
+
+        sort(degree.begin(), degree.end());
+
+        long long value = 1;
+        long long totalImportance = 0;
+        for (long long d : degree) {
+            totalImportance += (value * d);
+            value++;
+        }
+
+        return totalImportance;
     }
 };
