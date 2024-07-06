@@ -12,8 +12,9 @@ public:
 
         long long value = 1;
         long long totalImportance = 0;
-        for (long long d : degree) {
-            totalImportance += (value * d);
+        for (int i=0;i<n;i++) 
+        {
+            totalImportance += (value * degree[i]);
             value++;
         }
 
