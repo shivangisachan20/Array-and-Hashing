@@ -1,23 +1,27 @@
-class Solution 
-{
+class Solution {
 public:
-    double averageWaitingTime(vector<vector<int>>& customers) 
-    {
-        double total_waiting_time = 0;
-        int current_time = 0;
+    double averageWaitingTime(vector<vector<int>>& customers) {
+        int n = customers.size();
 
-        for (const auto& customer : customers) 
-        {
-            int arrival = customer[0];
-            int service = customer[1];
-            if (current_time < arrival) {
-                current_time = arrival;
+        double totalWaitTime = 0;
+        int currTime         = 0;
+
+        for(auto &vec : customers) {
+            int arrivalTime = vec[0];
+            int cookTime   = vec[1];
+
+            if(currTime < arrivalTime) {
+                currTime = arrivalTime;
             }
-            int waiting_time = current_time - arrival + service;
-            total_waiting_time += waiting_time;
-            current_time += service;
+
+            int waitTime = currTime + cookTime - arrivalTime;
+
+            totalWaitTime += waitTime;
+
+            currTime += cookTime;
         }
 
-        return total_waiting_time / customers.size();
+        return totalWaitTime/n;
     }
 };
+
