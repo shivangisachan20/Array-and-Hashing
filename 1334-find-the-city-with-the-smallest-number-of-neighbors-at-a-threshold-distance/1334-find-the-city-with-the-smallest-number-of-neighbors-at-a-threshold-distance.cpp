@@ -1,52 +1,59 @@
 class Solution {
 public:
-    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-        vector<vector<int>> dist(n, vector<int>(n, 10001));
+    #define P pair<int, int>
+    void floydWarshall(int n, vector<vector<int>>& shortestPathMatrix) {
         
-        // Initialize distance matrix
+        for(int via = 0; via < n; via++) {
+            
+            for(int i = 0; i<n; i++) {
+                for(int j = 0; j<n; j++) {
+                    
+                   shortestPathMatrix[i][j] = min(shortestPathMatrix[i][j],
+                                                  shortestPathMatrix[i][via] + shortestPathMatrix[via][j]);
+                    
+                }
+            }
+        }
+    }
+
+    int getCityWithFewestReachable(int n, const vector<vector<int>>& shortestPathMatrix, int distanceThreshold) {
+        int cityWithFewestReachable = -1;
+        int fewestReachableCount = INT_MAX;
+
         for (int i = 0; i < n; i++) {
-            dist[i][i] = 0;
+            int reachableCount = 0;
+            for (int j = 0; j < n; j++) {
+                if (i != j && shortestPathMatrix[i][j] <= distanceThreshold) {
+                    reachableCount++;
+                }
+            }
+
+            if (reachableCount <= fewestReachableCount) {
+                fewestReachableCount = reachableCount;
+                cityWithFewestReachable = i;
+            }
         }
-        
-        // Build initial graph
+        return cityWithFewestReachable;
+    }
+
+    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+        vector<vector<int>> shortestPathMatrix(n, vector<int>(n, 1e9+7));
+
+        for (int i = 0; i < n; i++) {
+            shortestPathMatrix[i][i] = 0;  // Distance to itself is zero
+        }
+
         for (const auto& edge : edges) {
-            dist[edge[0]][edge[1]] = edge[2];
-            dist[edge[1]][edge[0]] = edge[2];
+            int u = edge[0];
+            int v = edge[1];
+            int wt = edge[2];
+            shortestPathMatrix[u][v] = wt;
+            shortestPathMatrix[v][u] = wt;
         }
-        
-        // Floyd-Warshall algorithm
-        for (int k = 0; k < n; k++) 
-        {
-            for (int i = 0; i < n; i++) 
-            {
-                for (int j = 0; j < n; j++) 
-                {
-                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
-                }
-            }
-        }
-        
-        int minReachableCities = n;
-        int result = -1;
-        
-        // Find the city with the smallest number of reachable cities
-        for (int i = 0; i < n; i++) 
-        {
-            int reachableCities = 0;
-            for (int j = 0; j < n; j++) 
-            {
-                if (dist[i][j] <= distanceThreshold) 
-                {
-                    reachableCities++;
-                }
-            }
-            if (reachableCities <= minReachableCities) 
-            {
-                minReachableCities = reachableCities;
-                result = i;
-            }
-        }
-        
-        return result;
+
+        floydWarshall(n, shortestPathMatrix);
+
+        return getCityWithFewestReachable(n, shortestPathMatrix, distanceThreshold);
     }
 };
+
