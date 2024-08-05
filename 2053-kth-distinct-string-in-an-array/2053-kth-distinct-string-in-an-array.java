@@ -1,7 +1,7 @@
 class Solution {
     public String kthDistinct(String[] arr, int k) {
 
-        HashMap<String, Boolean> map = new HashMap<>();
+        LinkedHashMap<String, Boolean> map = new LinkedHashMap<>();
         int count = 0;
         for (int i = 0; i < arr.length; i++) {
             if (map.containsKey(arr[i])) {
