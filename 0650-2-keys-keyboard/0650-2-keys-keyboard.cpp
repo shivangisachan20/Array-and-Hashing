@@ -1,6 +1,7 @@
 class Solution {
 public:
-    int minSteps(int n) {
+    int minSteps(int n) 
+    {
         if(n==1) return 0;
         int ans = 0;
         int i = 2;
@@ -11,7 +12,8 @@ public:
                 ans += i;
                 n = n/i;
             }
-            else i++;
+            else
+            i++;
         }
         return ans;
     }
